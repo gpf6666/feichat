@@ -8,7 +8,7 @@ import JoinModal, { JoinEvent } from './components/JoinModal.vue'
 import YwzDrawer from './components/YwzDrawer.vue'
 import { io } from 'socket.io-client'
 // 创建 socket 实例
-const socket = io('ws://localhost:5432')
+const socket = io('https://smart-soft-stallion.glitch.me');
 
 const chatData = ref<ChatDataItem[]>([])
 const curUser = reactive({
