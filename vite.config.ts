@@ -12,4 +12,7 @@ export default defineConfig({
     //   dts: 'src/type/components.d.ts',
     // }),
   ],
+  build: {
+    outDir: 'docs', // 将构建输出文件夹设置为 build（默认为 dist）
+  }
 })
