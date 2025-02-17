@@ -14,5 +14,6 @@ export default defineConfig({
   ],
   build: {
     outDir: 'docs', // 将构建输出文件夹设置为 build（默认为 dist）
-  }
+  },
+   base: './'
 })

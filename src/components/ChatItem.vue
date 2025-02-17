@@ -19,6 +19,17 @@ const handleClickAvatar = (e: ChatDataItem) => {
     avatar: e.avatar,
   })
 }
+const scrollBottom=()=>{
+  const chatArea = document.querySelector('.chat-area')
+  if (chatArea) {
+    console.log(chatArea)
+chatArea.scrollTop = chatArea.scrollHeight;
+  }
+}
+
+defineExpose({
+  scrollBottom,
+})
 </script>
 <template>
   <div
@@ -68,6 +79,7 @@ const handleClickAvatar = (e: ChatDataItem) => {
 .chat-area {
   --tw-bg-opacity: 0.7;
   height: calc(720px - 148px);
+  overflow-y: scroll;
 }
 /* 隐藏滚动条 */
 .chat-area::-webkit-scrollbar {

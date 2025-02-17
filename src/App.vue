@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref,onMounted } from 'vue'
 import MainContainer from './components/MainContainer.vue'
 import NavHeader from './components/NavHeader.vue'
 import ChatItem, { ChatDataItem } from './components/ChatItem.vue'
@@ -28,6 +28,8 @@ const drawerShow = ref(false)
 const userChatData = ref<Map<string, ChatDataItem[]>>(new Map())
 const chatUserId = ref('')
 const userMessage = ref('')
+const childRef = ref<InstanceType<typeof ChatItem> | null>(null);
+
 
 const handleJoin = (e: JoinEvent) => {
   socket.emit('join', Object.assign({}, e))
@@ -74,8 +76,16 @@ const handleSend = (v: string) => {
   chatData.value.push(Object.assign({}, { type }, obj))
   // 清空 input box 中的内容
   message.value = ''
+
   // 发出send事件，将消息发送出去
   socket.emit('send', obj)
+   if (childRef.value) {
+    setTimeout(() => {
+          // 如果 childRef 存在，执行滚动操作
+ childRef?.value?.scrollBottom();
+    }, 200);
+
+  }
 }
 // 监听消息的广播
 socket.on('message', (e: any) => {
@@ -153,7 +163,7 @@ const handleClickUserAvatar = (e: typeof curUser) => {
       />
       <!-- 内容区域 -->
       <div class="px-4">
-        <ChatItem :chat-data="chatData" @click-user="handleClickUserAvatar" />
+        <ChatItem :chat-data="chatData" ref="childRef" @click-user="handleClickUserAvatar" />
       </div>
       <InputBox v-model="message" @send="handleSend" />
     </MainContainer>
@@ -175,4 +185,7 @@ const handleClickUserAvatar = (e: typeof curUser) => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+
+</style>
