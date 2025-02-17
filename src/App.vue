@@ -87,6 +87,7 @@ const handleSend = (v: string) => {
 
   }
 }
+
 // 监听消息的广播
 socket.on('message', (e: any) => {
   const msg = Object.assign({}, e, { type: 'your' }) as ChatDataItem
@@ -169,7 +170,7 @@ const handleClickUserAvatar = (e: typeof curUser) => {
     </MainContainer>
     <JoinModal @join="handleJoin" />
     <YwzDrawer v-model="drawerShow">
-      <div class="p-4 w-[920px]">
+      <div class="p-4" style="width: calc(100vw - 60px)">
         <div class="px-4">
           <h4 class="text-center mb-2 text-xl">
             {{ userList.get(chatUserId)?.name }}

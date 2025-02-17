@@ -62,6 +62,7 @@ defineExpose({
             <div
               class="p-2 mt-2 rounded-t max-w-192 text-base-content/100"
               :class="item.type === 'your' ? 'bg-left' : 'bg-right'"
+              style="word-break: break-all;"
             >
               {{ item.content }}
             </div>
@@ -78,7 +79,7 @@ defineExpose({
 <style scoped>
 .chat-area {
   --tw-bg-opacity: 0.7;
-  height: calc(720px - 148px);
+  height: calc(100vh - 148px);
   overflow-y: scroll;
 }
 /* 隐藏滚动条 */

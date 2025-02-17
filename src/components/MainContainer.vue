@@ -27,7 +27,7 @@
 
 <style scoped>
 .ywz-container {
-  width: 1080px;
-  height: 720px;
+  width: 100vw;
+  height: 100vh;
 }
 </style>
