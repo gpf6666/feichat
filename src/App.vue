@@ -145,7 +145,7 @@ const handleClickUserAvatar = (e: typeof curUser) => {
     <MainContainer>
       <!-- 顶部栏 -->
       <NavHeader
-        :group-name="'飞聊'"
+        :group-name="'飞聊APP'"
         :person-number="userList.size"
         @more="handleOpenDrawer"
         :user-list="userList"
