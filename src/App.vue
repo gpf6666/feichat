@@ -1,153 +1,157 @@
 <script setup lang="ts">
-import { reactive, ref,onMounted } from 'vue'
-import MainContainer from './components/MainContainer.vue'
-import NavHeader from './components/NavHeader.vue'
-import ChatItem, { ChatDataItem } from './components/ChatItem.vue'
-import InputBox from './components/InputBox.vue'
-import JoinModal, { JoinEvent } from './components/JoinModal.vue'
-import YwzDrawer from './components/YwzDrawer.vue'
-import { io } from 'socket.io-client'
+import { reactive, ref, onMounted } from "vue";
+import MainContainer from "./components/MainContainer.vue";
+import NavHeader from "./components/NavHeader.vue";
+import ChatItem, { ChatDataItem } from "./components/ChatItem.vue";
+import InputBox from "./components/InputBox.vue";
+import JoinModal, { JoinEvent } from "./components/JoinModal.vue";
+import YwzDrawer from "./components/YwzDrawer.vue";
+import { io } from "socket.io-client";
 // 创建 socket 实例
-const socket = io('https://smart-soft-stallion.glitch.me');
+const socket = io("https://smart-soft-stallion.glitch.me");
 
-const chatData = ref<ChatDataItem[]>([])
+const chatData = ref<ChatDataItem[]>([]);
 const curUser = reactive({
-  name: '',
-  avatar: '',
-  id: '',
-})
+  name: "",
+  avatar: "",
+  id: "",
+});
 interface User {
-  name: string
-  avatar: string
-  id: string
-  new: boolean
+  name: string;
+  avatar: string;
+  id: string;
+  new: boolean;
 }
-const userList = ref<Map<string, User>>(new Map())
-const message = ref('')
-const drawerShow = ref(false)
-const userChatData = ref<Map<string, ChatDataItem[]>>(new Map())
-const chatUserId = ref('')
-const userMessage = ref('')
+const userList = ref<Map<string, User>>(new Map());
+const message = ref("");
+const drawerShow = ref(false);
+const userChatData = ref<Map<string, ChatDataItem[]>>(new Map());
+const chatUserId = ref("");
+const userMessage = ref("");
 const childRef = ref<InstanceType<typeof ChatItem> | null>(null);
 
-
 const handleJoin = (e: JoinEvent) => {
-  socket.emit('join', Object.assign({}, e))
-}
+  socket.emit("join", Object.assign({}, e));
+};
 const handleOpenDrawer = (user: typeof curUser) => {
-  chatUserId.value = user.id
-  const u = userList.value.get(chatUserId.value)
+  chatUserId.value = user.id;
+  const u = userList.value.get(chatUserId.value);
   if (u) {
-    u.new = false
+    u.new = false;
   }
-  drawerShow.value = true
-}
-socket.on('joined', (e: typeof curUser) => {
-  curUser.avatar = e.avatar
-  curUser.id = e.id
-  curUser.name = e.name
-})
+  drawerShow.value = true;
+};
+socket.on("joined", (e: typeof curUser) => {
+  curUser.avatar = e.avatar;
+  curUser.id = e.id;
+  curUser.name = e.name;
+});
 
 // 监听 welcome
-socket.on('welcome', ({ name, uList }) => {
+socket.on("welcome", ({ name, uList }) => {
   uList.forEach((item: any[]) => {
-    const [id, value] = item
-    userList.value.set(id, value)
-  })
+    const [id, value] = item;
+    userList.value.set(id, value);
+  });
 
   chatData.value.push({
-    type: 'tips',
-    id: Math.random().toString().split('.')[1].slice(0, 10),
-    content: '欢迎' + name + '加入群聊~',
-  })
-})
+    type: "tips",
+    id: Math.random().toString().split(".")[1].slice(0, 10),
+    content: "欢迎" + name + "加入群聊~",
+  });
+});
 
 // 群聊发送消息
 const handleSend = (v: string) => {
   const obj = {
-    id: Math.random().toString().split('.')[1].slice(0, 10),
+    id: Math.random().toString().split(".")[1].slice(0, 10),
     name: curUser.name,
     avatar: curUser.avatar,
     content: v,
     userId: curUser.id,
-  }
+  };
   // 在 chatData 中新增一条数据，表示自己发送的
-  const type: 'me' = 'me'
-  chatData.value.push(Object.assign({}, { type }, obj))
+  const type: "me" = "me";
+  chatData.value.push(Object.assign({}, { type }, obj));
   // 清空 input box 中的内容
-  message.value = ''
+  message.value = "";
 
   // 发出send事件，将消息发送出去
-  socket.emit('send', obj)
-   if (childRef.value) {
+  socket.emit("send", obj);
+  if (childRef.value) {
     setTimeout(() => {
-          // 如果 childRef 存在，执行滚动操作
- childRef?.value?.scrollBottom();
+      // 如果 childRef 存在，执行滚动操作
+      childRef?.value?.scrollBottom();
     }, 200);
-
   }
-}
+};
 
 // 监听消息的广播
-socket.on('message', (e: any) => {
-  const msg = Object.assign({}, e, { type: 'your' }) as ChatDataItem
-  chatData.value.push(msg)
-})
+socket.on("message", (e: any) => {
+  const msg = Object.assign({}, e, { type: "your" }) as ChatDataItem;
+  chatData.value.push(msg);
+});
 
 // 私聊发送消息
 const handleSendUser = (v: string) => {
   const obj = {
-    id: Math.random().toString().split('.')[1].slice(0, 10),
+    id: Math.random().toString().split(".")[1].slice(0, 10),
     name: curUser.name,
     avatar: curUser.avatar,
     content: v,
     userId: curUser.id,
     sendUserId: chatUserId.value,
-  }
+  };
   // 在 userChatData 中新增一条数据，表示自己发送的
-  const type: 'me' = 'me'
+  const type: "me" = "me";
 
   if (!userChatData.value.has(chatUserId.value)) {
-    userChatData.value.set(chatUserId.value, [])
+    userChatData.value.set(chatUserId.value, []);
   }
-  const _chatData = userChatData.value.get(chatUserId.value) ?? []
-  _chatData.push(Object.assign({}, { type }, obj))
+  const _chatData = userChatData.value.get(chatUserId.value) ?? [];
+  _chatData.push(Object.assign({}, { type }, obj));
   // 清空 input box 中的内容
-  userMessage.value = ''
+  userMessage.value = "";
   // 发出send事件，将消息发送出去
-  socket.emit('send-user', obj)
-}
+  socket.emit("send-user", obj);
+};
 // 监听接受消息
-socket.on('message-user', (e: any) => {
-  const msg = Object.assign({}, e, { type: 'your' }) as ChatDataItem
-  const sendId = e.userId
+socket.on("message-user", (e: any) => {
+  const msg = Object.assign({}, e, { type: "your" }) as ChatDataItem;
+  const sendId = e.userId;
   if (!userChatData.value.has(sendId)) {
-    userChatData.value.set(sendId, [])
+    userChatData.value.set(sendId, []);
   }
-  const chatData = userChatData.value.get(sendId) ?? []
-  chatData.push(msg)
-  const u = userList.value.get(sendId)
+  const chatData = userChatData.value.get(sendId) ?? [];
+  chatData.push(msg);
+  const u = userList.value.get(sendId);
+    if (childRef.value) {
+    setTimeout(() => {
+      // 如果 childRef 存在，执行滚动操作
+      childRef?.value?.scrollBottom();
+    }, 200);
+  }
   if (u) {
-    u.new = true
+    u.new = true;
   }
-})
+});
 // 监听退出
-socket.on('quit', (id: string) => {
-  const user = userList.value.get(id)
-  userList.value.delete(id)
+socket.on("quit", (id: string) => {
+  const user = userList.value.get(id);
+  userList.value.delete(id);
   chatData.value.push({
-    type: 'tips',
-    id: Math.random().toString().split('.')[1].slice(0, 10),
-    content: user?.name + '退出群聊~',
-  })
-})
+    type: "tips",
+    id: Math.random().toString().split(".")[1].slice(0, 10),
+    content: user?.name + "退出群聊~",
+  });
+});
 // 点击用户头像
 const handleClickUserAvatar = (e: typeof curUser) => {
   if (e.id === curUser.id) {
-    return
+    return;
   }
-  handleOpenDrawer(e)
-}
+  handleOpenDrawer(e);
+};
 </script>
 
 <template>
@@ -164,7 +168,11 @@ const handleClickUserAvatar = (e: typeof curUser) => {
       />
       <!-- 内容区域 -->
       <div class="px-4">
-        <ChatItem :chat-data="chatData" ref="childRef" @click-user="handleClickUserAvatar" />
+        <ChatItem
+          :chat-data="chatData"
+          ref="childRef"
+          @click-user="handleClickUserAvatar"
+        />
       </div>
       <InputBox v-model="message" @send="handleSend" />
     </MainContainer>
@@ -186,7 +194,4 @@ const handleClickUserAvatar = (e: typeof curUser) => {
   </div>
 </template>
 
-<style scoped>
-
-
-</style>
+<style scoped></style>
