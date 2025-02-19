@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div
+  <!-- <div
     class="from-primary to-secondary text-primary-content grid place-items-center items-end bg-gradient-to-br pt-20 h-screen relative"
   >
     <svg
@@ -22,6 +22,10 @@
     >
       <slot></slot>
     </div>
+  </div> -->
+  <div>
+   <slot></slot>
+
   </div>
 </template>
 

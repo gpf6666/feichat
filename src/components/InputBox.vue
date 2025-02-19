@@ -56,6 +56,7 @@ const handleSend = () => {
       </button>
     </div>
         <div class="emoji-picker">
+          <div class="mask" v-if="showEmojiPicker" @click="showEmojiPicker=false"></div>
        <EmojiPicker  v-if="showEmojiPicker" :native="true" :disable-skin-tones="true"   @select="onEmojiSelect" />
       </div>
   </div>
@@ -63,9 +64,20 @@ const handleSend = () => {
 
 <style  scoped>
 .emoji-picker {
-  position: absolute;
+  position: fixed;
   bottom: 80px;
   right: 60px;
+}
+.mask {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: trabsparent;
 }
 ::v-deep .input-group :where(span)  {
    background-color: #fff!important
