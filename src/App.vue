@@ -90,6 +90,12 @@ const handleSend = (v: string) => {
 socket.on("message", (e: any) => {
   const msg = Object.assign({}, e, { type: "your" }) as ChatDataItem;
   chatData.value.push(msg);
+      if (childRef.value) {
+    setTimeout(() => {
+      // 如果 childRef 存在，执行滚动操作
+      childRef?.value?.scrollBottom();
+    }, 200);
+  }
 });
 
 // 私聊发送消息
@@ -125,12 +131,6 @@ socket.on("message-user", (e: any) => {
   const chatData = userChatData.value.get(sendId) ?? [];
   chatData.push(msg);
   const u = userList.value.get(sendId);
-    if (childRef.value) {
-    setTimeout(() => {
-      // 如果 childRef 存在，执行滚动操作
-      childRef?.value?.scrollBottom();
-    }, 200);
-  }
   if (u) {
     u.new = true;
   }

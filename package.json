@@ -11,7 +11,8 @@
   "dependencies": {
     "socket.io-client": "^4.5.1",
     "theme-change": "^2.1.0",
-    "vue": "^3.2.37"
+    "vue": "^3.2.37",
+    "vue3-emoji-picker": "^1.1.8"
   },
   "devDependencies": {
     "@vicons/ionicons5": "^0.12.0",
