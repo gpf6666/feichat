@@ -11,7 +11,7 @@ const showEmojiPicker = ref(false);
 // 用于绑定选中的表情
 const selectedEmoji = ref('');
 // 表情点击事件处理
-function onEmojiSelect(emoji) {
+function onEmojiSelect(emoji:any) {
   console.log(emoji,'llll')
   value.value += emoji.i;
   showEmojiPicker.value = false;  // 隐藏表情选择器
