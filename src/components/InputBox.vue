@@ -14,7 +14,6 @@ const selectedEmoji = ref('');
 function onEmojiSelect(emoji:any) {
   console.log(emoji,'llll')
   value.value += emoji.i;
-  showEmojiPicker.value = false;  // 隐藏表情选择器
 }
 const value = computed({
   get() {
@@ -63,18 +62,11 @@ const handleSend = () => {
 </template>
 
 <style  scoped>
-.emoji-picker {
-  position: fixed;
-  z-index: 1000;
-
-  bottom: 80px;
-  right: 60px;
-}
 .mask {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  z-index: 999;
+  z-index: 2;
   top: 0;
   left: 0;
   right: 0;
@@ -83,6 +75,12 @@ const handleSend = () => {
 }
 ::v-deep .input-group :where(span)  {
    background-color: #fff!important
+}
+::v-deep .v3-emoji-picker {
+  position: fixed;
+  z-index: 3;
+  bottom: 80px;
+  right: 60px;
 }
 </style>
 
