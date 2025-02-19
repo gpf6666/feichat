@@ -65,6 +65,8 @@ const handleSend = () => {
 <style  scoped>
 .emoji-picker {
   position: fixed;
+  z-index: 1000;
+
   bottom: 80px;
   right: 60px;
 }
