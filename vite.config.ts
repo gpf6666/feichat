@@ -5,6 +5,15 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  // server: {
+  //   proxy: {
+  //     '/chat': {
+  //       target: 'https://smart-soft-stallion.glitch.me/chat', // 目标服务器
+  //       changeOrigin: true, // 允许跨域
+  //       rewrite: (path) => path.replace(/^\/chat/, ''), // 重写路径，去掉 /api
+  //     },
+  //   },
+  // },
   plugins: [
     vue(),
     // Components({

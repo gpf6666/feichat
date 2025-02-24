@@ -60,7 +60,7 @@ defineExpose({
               >{{ item.name }}</span
             >
             <div
-              class="p-2 mt-2 rounded-t max-w-192 text-base-content/100"
+              class="p-2 mt-2 rounded-t max-w-192 text-base-content/100 chat-message"
               :class="item.type === 'your' ? 'bg-left' : 'bg-right'"
               style="word-break: break-all;"
             >

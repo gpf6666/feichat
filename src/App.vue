@@ -57,7 +57,7 @@ socket.on("welcome", ({ name, uList }) => {
   chatData.value.push({
     type: "tips",
     id: Math.random().toString().split(".")[1].slice(0, 10),
-    content: "欢迎" + name + "加入群聊~",
+    content: "Welcome " + name + " to join the chat~",
   });
 });
 
@@ -155,15 +155,16 @@ const handleClickUserAvatar = (e: typeof curUser) => {
 </script>
 
 <template>
-  <div>
+  <div >
     <!-- 外层容器 -->
     <MainContainer>
       <!-- 顶部栏 -->
       <NavHeader
-        :group-name="'飞聊APP'"
+        :group-name="'Online Chat'"
         :person-number="userList.size"
         @more="handleOpenDrawer"
         :user-list="userList"
+        :cur-user="curUser"
         :cur-user-id="curUser.id"
       />
       <!-- 内容区域 -->

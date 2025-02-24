@@ -1,3 +1,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary-color: #e6e6e6; /* Dark theme primary color */
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --btn-color: #cccccc;
+}
+
+[data-theme="dark"] {
+  --primary-color: #1e1e1e; /* Dark theme primary color */
+  --background-color: #333333;
+  --text-color: #f0f0f0;
+  --btn-color: #333333;
+
+}
+
+[data-theme="light"] {
+  --primary-color: #e6e6e6; /* Dark theme primary color */
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --btn-color: #cccccc;
+}
+#app {
+  height: 100vh;
+}
+#app,.modal-box,.drawer-content, .input,.btn,a {
+  background-color: var(--primary-color)!important;
+  color: var(--text-color)!important;
+}
+
+.my-4,.chat-message,.el-dropdown{
+  color: var(--text-color)!important;
+}
+.chat-area,.modal-box,.input,.btn {
+  background-color:  var(--background-color)!important;
+
+}
+.btn {
+  border-color:  var(--btn-color)!important;
+  background-color: var(--btn-color)!important;
+}

@@ -37,11 +37,11 @@ if(!name.value) {
 <template>
   <div :class="['modal', isOpen ? 'modal-open' : '']">
     <div class="modal-box">
-      <h3 class="font-bold text-lg text-center">加入群聊</h3>
+      <h3 class="font-bold text-lg text-center">Join Chat</h3>
 
       <div class="form-control w-full">
         <label class="label">
-          <span class="label-text">请输入你的名字</span>
+          <span class="label-text">Please enter your name</span>
         </label>
         <input
           type="text"
@@ -52,7 +52,7 @@ if(!name.value) {
         />
       </div>
       <div class="modal-action justify-center">
-        <label for="my-modal" class="btn px-8" @click="handleJoin">进入</label>
+        <label for="my-modal" class="btn px-8" @click="handleJoin">Enter</label>
       </div>
     </div>
   </div>

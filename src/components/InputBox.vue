@@ -51,7 +51,7 @@ const handleSend = () => {
         style="--tw-bg-opacity: 0.7"
         @click="handleSend"
       >
-        发送
+        Send
       </button>
     </div>
         <div class="emoji-picker">
